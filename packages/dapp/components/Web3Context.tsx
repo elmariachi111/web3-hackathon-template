@@ -8,6 +8,7 @@ interface IWeb3Context {
   provider?: providers.Web3Provider;
   signer?: ethers.Signer;
   account?: string;
+  chainId?: number;
   connect: () => Promise<unknown>;
 }
 
@@ -19,16 +20,11 @@ const useWeb3 = () => useContext(Web3Context);
 
 const Web3Provider = ({ children }: { children: React.ReactNode }) => {
   const [web3Modal, setWeb3Modal] = useState<Web3Modal>();
-  const [web3Resources, setWeb3Resources] = useState<{
-    provider: providers.Web3Provider;
-    signer: ethers.Signer;
-    account: string;
-  }>();
+  const [web3Resources, setWeb3Resources] = useState<IWeb3Context>();
 
   useEffect(() => {
     const w3m = new Web3Modal({
       cacheProvider: true,
-      network: "31337",
       providerOptions: {
         walletconnect: {
           display: {
@@ -47,13 +43,17 @@ const Web3Provider = ({ children }: { children: React.ReactNode }) => {
   const connect = useCallback(async (provider?: string) => {
     if (!web3Modal) return;
     const instance =  provider ? web3Modal.connectTo(provider) : web3Modal.connect();
-    const _provider = new providers.Web3Provider(await instance);
+    const _instance = await instance;
+    const _provider = new providers.Web3Provider(_instance);
     const signer = await _provider.getSigner();
     const account = await signer.getAddress();
+
     setWeb3Resources({
       provider: _provider,
       signer,
       account,
+      chainId: Number(_instance.chainId),
+      connect,
     });
   },[web3Modal]);
 
