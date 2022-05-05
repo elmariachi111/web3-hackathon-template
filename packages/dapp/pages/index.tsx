@@ -21,16 +21,24 @@ const Home: NextPage = () => {
   const [nextTokenId, setNextTokenId] = useState<string>();
   const [contract, setContract] = useState<TokenContract>();
   const [tokens, setTokens] = useState<TokenMetadataResponse[]>([]);
-  const { provider, signer, account } = useWeb3();
+  const { provider, signer, account, chainId } = useWeb3();
 
   useEffect(() => {
     if (!signer) return;
+    //only run on hardhat
+    if (chainId != 31337) {
+      setContract(undefined);
+      return;
+    }
+
+    console.log(chainId);
+
     (async () => {
       const tokenFactory = TokenFactory.connect(process.env.NEXT_PUBLIC_TOKEN_CONTRACT as string, signer);
       const contract = tokenFactory.attach(process.env.NEXT_PUBLIC_TOKEN_CONTRACT as string);
       setContract(contract);
     })();
-  }, [signer]);
+  }, [signer, chainId]);
   
   useEffect(() => {
     if (!contract) return;
@@ -89,6 +97,7 @@ const Home: NextPage = () => {
     setNextTokenId(nti.toString())
   },[contract, tokens, setTokens, account])
 
+  
   return (
     <Container maxW="container.xl" p="2" h="100vh" as={Flex} direction="column">
       <Head>

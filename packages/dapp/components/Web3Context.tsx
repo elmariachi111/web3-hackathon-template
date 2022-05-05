@@ -4,23 +4,27 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 
-interface IWeb3Context {
+interface IWeb3Resources {
   provider?: providers.Web3Provider;
   signer?: ethers.Signer;
   account?: string;
   chainId?: number;
-  connect: () => Promise<unknown>;
+}
+
+interface IWeb3Context extends IWeb3Resources {
+  connect: () => Promise<void>;
 }
 
 const Web3Context = React.createContext<IWeb3Context>({
-  connect: () => Promise.resolve({}),
+  connect: () => Promise.resolve(),
+  //disconnect: () => Promise.resolve({}),
 });
 
 const useWeb3 = () => useContext(Web3Context);
 
 const Web3Provider = ({ children }: { children: React.ReactNode }) => {
   const [web3Modal, setWeb3Modal] = useState<Web3Modal>();
-  const [web3Resources, setWeb3Resources] = useState<IWeb3Context>();
+  const [web3Resources, setWeb3Resources] = useState<IWeb3Resources>();
 
   useEffect(() => {
     const w3m = new Web3Modal({
@@ -40,6 +44,13 @@ const Web3Provider = ({ children }: { children: React.ReactNode }) => {
     setWeb3Modal(w3m);
   }, []);
 
+  const disconnect = async () => {
+    if (!web3Modal) return;
+
+    //TODO remove/reset context
+    await web3Modal.clearCachedProvider();
+  };
+
   const connect = useCallback(async (provider?: string) => {
     if (!web3Modal) return;
     const instance =  provider ? web3Modal.connectTo(provider) : web3Modal.connect();
@@ -53,7 +64,20 @@ const Web3Provider = ({ children }: { children: React.ReactNode }) => {
       signer,
       account,
       chainId: Number(_instance.chainId),
-      connect,
+    });
+    _instance.on("accountsChanged", (accounts: string[]) => {
+      console.log(accounts);
+      setWeb3Resources((old) => ({
+        ...old,
+        account: accounts[0],
+      }));
+    });
+
+    _instance.on("chainChanged", (chainId: number) => {
+      setWeb3Resources((old) => ({
+        ...old,
+        chainId,
+      }));
     });
   },[web3Modal]);
 
