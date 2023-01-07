@@ -1,19 +1,17 @@
-
-# dependencies
-node_modules
-/.pnp
-.pnp.js
-
-
-# misc
 .DS_Store
-*.pem
+node_modules
+.turbo
+*.log
+.next
+dist
+dist-ssr
+*.local
+.env
+.cache
+server/dist
+public/dist
+.turbo
+storybook-static/
 
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# typescript
-*.tsbuildinfo
+apps/app-vite-js
+apps/app-vite-ts
