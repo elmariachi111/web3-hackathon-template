@@ -17,4 +17,4 @@ fetching assets directly from chain
 
 ## 2023 update
 
-inspired by https://github.com/bigstair-monorepo/monorepo / https://www.robinwieruch.de/javascript-monorepos/
+inspired by https://github.com/bigstair-monorepo/monorepo / https://www.robinwieruch.de/javascript-monorepos/ and https://dev.to/mxro/the-ultimate-guide-to-typescript-monorepos-5ap7
