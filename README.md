@@ -1,19 +1,16 @@
 # an opinionated scaffold for web3 hackathon projects
 
 typescript  
-pnpm monorepo with two packages  
-hardhat  
+yarn monorepo with packages and apps  
+foundry ~~hardhat~~   
 typechain  
 oz erc721 base impl
 
 nextjs / react  
-chakraui  
-web3modal in context  
-ethers.js
-
-server based metadata (next)
-unrestricted minting
-fetching assets directly from chain
+chakraui 2  
+ethers.js  
+wagmi.sh  
+rainbowkit  
 
 ## 2023 update
 
