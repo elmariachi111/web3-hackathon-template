@@ -1,19 +1,14 @@
 .env
+node_modules
 
 # Compiler files
 cache/
 out/
+dist/
+typechain/
 
 # Ignores development broadcast logs
-!/broadcast
-/broadcast/*
-/broadcast/*/31337/
 
+/broadcast/*
 lib/*
 !.gitkeep
-
-# hardhat 
-node_modules
-cache_hardhat/
-artifacts/
-.openzeppelin/unknown-*
