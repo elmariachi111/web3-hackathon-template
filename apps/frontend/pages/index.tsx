@@ -1,7 +1,12 @@
-import { Inter } from "@next/font/google"
-
-const inter = Inter({ subsets: ["latin"] })
+import { Flex, Text } from "@chakra-ui/react"
+import { useAccount } from "wagmi"
 
 export default function Home() {
-  return <main>foo</main>
+  const { address } = useAccount()
+
+  return (
+    <Flex>
+      <Text>{address}</Text>
+    </Flex>
+  )
 }
