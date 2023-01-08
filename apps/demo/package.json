@@ -7,12 +7,14 @@
     "clean": "rm -rf .turbo && rm -rf node_modules"
   },
   "dependencies": {
-    "@app/core": "*"
+    "@app/contracts": "*",
+    "@app/core": "*",
+    "ethers": "^5.7.2"
   },
   "devDependencies": {
-    "ts-config-app": "*",
     "eslint-config-app": "*",
     "serve": "^14.1.2",
+    "ts-config-app": "*",
     "typescript": "^4.9.4"
   }
 }
