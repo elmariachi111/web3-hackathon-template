@@ -1,2 +1,4 @@
-this is code generated out off a hardhat template
+# Contracts
+requirements: getforge.sh
 
+exports typechain types

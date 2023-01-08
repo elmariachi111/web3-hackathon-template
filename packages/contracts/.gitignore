@@ -1,10 +1,14 @@
-node_modules
 .env
-coverage
-coverage.json
-typechain
-dist 
+node_modules
 
-#Hardhat files
-cache
-artifacts
+# Compiler files
+cache/
+out/
+dist/
+typechain/
+
+# Ignores development broadcast logs
+
+/broadcast/*
+lib/*
+!.gitkeep
